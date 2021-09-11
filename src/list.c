@@ -21,24 +21,27 @@ struct Node* lnew()
 void lprint(struct Node* head)
 {
 	struct Node* temp = head;
-	while(temp != NULL){
+	while(temp != NULL)
+	{
 		printf("%d ", temp->value);
 		temp=temp->next;
 	}	
 }
 
-void linsert(struct Node* head, int x, int n)
+void linsert(struct Node ** head, int x, int n)
 {
 	struct Node* temp1 = (struct Node*)malloc(sizeof(struct Node));
 	temp1->value = x;
 	temp1->next = NULL;
-	if(n == 1){
-		temp1->next = head;
-		head = temp1;
+	if(n == 1)
+	{
+		temp1->next = *head;
+		*head = temp1;
 		return;
 	}
-	struct Node* temp2 = head;
-	for(int i = 0; i < n-2; i++){
+	struct Node* temp2 = *head;
+	for(int i = 0; i < n-2; i++)
+	{
 		if(temp2->next != NULL)
 			temp2 = temp2->next;
 		else
@@ -46,9 +49,10 @@ void linsert(struct Node* head, int x, int n)
 	}
 	temp1->next = temp2->next;
 	temp2->next = temp1;
-	if(head->next->next == NULL)
+	if((*head)->next->next == NULL && hr == F)
 	{
-		lfpop(&head);
+		lfpop(head);
+		hr = T;
 	}
 }
 
@@ -58,9 +62,10 @@ void lfpush(struct Node ** head, int x)
 	temp->value = x;
 	temp->next = (*head);
 	(*head) = temp;
-	if((*head)->next->next == NULL)
+	if((*head)->next->next == NULL && hr == F)
 	{
 		lfpop(head);
+		hr = T;
 	}
 }
 
@@ -80,19 +85,21 @@ int lfpop(struct Node ** head)
 	}
 }
 
-void lbpush(struct Node* head, int x)
+void lbpush(struct Node ** head, int x)
 {
-	struct Node* temp = head;
-	while(temp->next != NULL){
+	struct Node* temp = *head;
+	while(temp->next != NULL)
+	{
 		temp = temp->next;
 	}
 	struct Node* temp2 = (struct Node*)malloc(sizeof(struct Node));
 	temp2->value = x;
 	temp2->next = NULL;
 	temp->next = temp2;
-	if(head->next->next == NULL)
+	if((*head)->next->next == NULL && hr == F)
 	{
-		lfpop(&head);
+		lfpop(head);
+		hr = T;
 	}
 }
 
@@ -105,7 +112,8 @@ int lbpop(struct Node* head)
 	else
 	{
 		struct Node* temp = head;
-		while(temp->next->next != NULL){
+		while(temp->next->next != NULL)
+		{
 			temp = temp->next;
 		}
 		struct Node* tbf = temp->next;
@@ -119,7 +127,8 @@ int lbpop(struct Node* head)
 void rm(struct Node* head, int index)
 {
 	struct Node* temp = head;
-	for(int i = 0; i < index - 2; i++){
+	for(int i = 0; i < index - 2; i++)
+	{
 		if(temp->next != NULL)
 			temp = temp->next;
 		else
@@ -133,7 +142,8 @@ void rm(struct Node* head, int index)
 struct Node* lpat(struct Node* head, int index)
 {
 	struct Node* temp = head;
-	for(int i = 0; i < index - 1; i++){
+	for(int i = 0; i < index - 1; i++)
+	{
 		if(temp->next != NULL)
 			temp = temp->next;
 		else
