@@ -10,9 +10,7 @@ int main(){
 	lbpush(&list, 4);
 	lbpush(&list, 5);
 	lbpush(&list, 6);
-
-	// linsert(list, 11, 0);
-	
+		
 	printf("List: \n");
 	lprint(list);
 	printf("\n");

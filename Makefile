@@ -7,3 +7,7 @@ objs/example.o: example.c
 
 run:
 	./bin
+
+clean:
+	rm ./bin
+	rm objs/*

@@ -7,10 +7,7 @@ struct Node
 	struct Node* next;	
 };
 
-typedef enum { F, T } bool;
-static bool hr = F;
-
-#define List struct Node*
+#define List struct Node *
 
 struct Node* lnew();
 void lprint(struct Node* head);

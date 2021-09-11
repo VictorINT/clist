@@ -1,5 +1,10 @@
 #include "list.h"
 
+void allocate(struct Node ** to_allocate)
+{
+	(*to_allocate) = (struct Node*)malloc(sizeof(struct Node));
+}
+
 void error_handle(char * arr)
 {
 	while((*arr) != '\0')
@@ -13,8 +18,7 @@ void error_handle(char * arr)
 
 struct Node* lnew()
 {
-	struct Node* head = NULL; 
-	head = (struct Node*)malloc(sizeof(struct Node));
+	struct Node* head = NULL;
 	return head;
 }
 
@@ -30,42 +34,48 @@ void lprint(struct Node* head)
 
 void linsert(struct Node ** head, int x, int n)
 {
-	struct Node* temp1 = (struct Node*)malloc(sizeof(struct Node));
-	temp1->value = x;
-	temp1->next = NULL;
-	if(n == 1)
+	if(n == 1 && (*head) == NULL)
 	{
-		temp1->next = *head;
-		*head = temp1;
-		return;
+		allocate(head);
+		(*head)->value = x;
 	}
-	struct Node* temp2 = *head;
-	for(int i = 0; i < n-2; i++)
+	else
 	{
-		if(temp2->next != NULL)
-			temp2 = temp2->next;
-		else
-			error_handle("Index out of bounds");
-	}
-	temp1->next = temp2->next;
-	temp2->next = temp1;
-	if((*head)->next->next == NULL && hr == F)
-	{
-		lfpop(head);
-		hr = T;
+		struct Node* temp1 = (struct Node*)malloc(sizeof(struct Node));
+		temp1->value = x;
+		temp1->next = NULL;
+		if(n == 1)
+		{
+			temp1->next = *head;
+			*head = temp1;
+			return;
+		}
+		struct Node* temp2 = *head;
+		for(int i = 0; i < n-2; i++)
+		{
+			if(temp2->next != NULL)
+				temp2 = temp2->next;
+			else
+				error_handle("Index out of bounds");
+		}
+		temp1->next = temp2->next;
+		temp2->next = temp1;
 	}
 }
 
 void lfpush(struct Node ** head, int x)
 {
-	struct Node* temp = (struct Node*)malloc(sizeof(struct Node));
-	temp->value = x;
-	temp->next = (*head);
-	(*head) = temp;
-	if((*head)->next->next == NULL && hr == F)
+	if((*head) == NULL)
 	{
-		lfpop(head);
-		hr = T;
+		allocate(head);
+		(*head)->value = x;
+	}
+	else
+	{
+		struct Node* temp = (struct Node*)malloc(sizeof(struct Node));
+		temp->value = x;
+		temp->next = (*head);
+		(*head) = temp;
 	}
 }
 
@@ -87,19 +97,22 @@ int lfpop(struct Node ** head)
 
 void lbpush(struct Node ** head, int x)
 {
-	struct Node* temp = *head;
-	while(temp->next != NULL)
+	if((*head) == NULL)
 	{
-		temp = temp->next;
+		allocate(head);
+		(*head)->value = x;
 	}
-	struct Node* temp2 = (struct Node*)malloc(sizeof(struct Node));
-	temp2->value = x;
-	temp2->next = NULL;
-	temp->next = temp2;
-	if((*head)->next->next == NULL && hr == F)
+	else
 	{
-		lfpop(head);
-		hr = T;
+		struct Node* temp = *head;
+		while(temp->next != NULL)
+		{
+			temp = temp->next;
+		}
+		struct Node* temp2 = (struct Node*)malloc(sizeof(struct Node));
+		temp2->value = x;
+		temp2->next = NULL;
+		temp->next = temp2;
 	}
 }
 
