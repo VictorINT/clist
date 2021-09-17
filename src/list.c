@@ -239,3 +239,36 @@ void lreverse(struct Node ** head)
 	}
 	*head = prev;
 }
+
+int get_sum(struct Node * head)
+{
+	int sum = 0;
+	while(head != NULL)
+	{
+		sum += head->value;
+		head = head->next;
+	}
+	return sum;
+}
+
+int get_mul(struct Node * head)
+{
+	int mul = 0;
+	while(head != NULL)
+	{
+		mul *= head->value;
+		head = head->next;
+	}
+	return mul;
+}
+
+int lsize(struct Node * head)
+{
+	int size = 0;
+	while(head != NULL)
+	{
+		size++;
+		head = head->next;
+	}
+	return size;
+}
