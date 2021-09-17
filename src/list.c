@@ -16,13 +16,13 @@ void error_handle(char * arr)
 	exit(0);
 }
 
-struct Node* lnew()
+struct Node * lnew()
 {
 	struct Node* head = NULL;
 	return head;
 }
 
-void lprint(struct Node* head)
+void lprint(struct Node * head)
 {
 	struct Node* temp = head;
 	while(temp != NULL)
@@ -116,7 +116,7 @@ void lbpush(struct Node ** head, int x)
 	}
 }
 
-int lbpop(struct Node* head)
+int lbpop(struct Node * head)
 {
 	if(head->next == NULL) // ?
 	{
@@ -137,24 +137,79 @@ int lbpop(struct Node* head)
 	}
 }
 
-void rm(struct Node* head, int index)
+void lrm(struct Node ** head, int index)
 {
-	struct Node* temp = head;
-	for(int i = 0; i < index - 2; i++)
+	if(index < 0)
 	{
-		if(temp->next != NULL)
-			temp = temp->next;
-		else
-			error_handle("Index out of bounds");
+		error_handle("Invalid index");
 	}
-	struct Node* tbf = temp->next;
-	temp->next = temp->next->next;
-	free(tbf);
+	if(index == 0)
+	{
+		lfpop(head);
+	}
+	else
+	{
+		struct Node* temp = *head;
+		for(int i = 0; i < index - 1; i++)
+		{
+			if(temp->next != NULL)
+				temp = temp->next;
+			else
+				error_handle("Index out of bounds");
+		}
+		struct Node* tbf = temp->next;
+		temp->next = temp->next->next;
+		free(tbf);
+	}
 }
 
-struct Node* lpat(struct Node* head, int index)
+void lrmrng(struct Node ** head, int start, int end)
+{
+	if(start < 0)
+	{
+		error_handle("Invalid index");
+	}
+	if(start == end)
+	{
+		lrm(head, start - 1);
+	}
+	else
+	{
+		struct Node* endtemp = *head;
+		struct Node* starttemp = *head;
+		for(int i = 0; i <= end - 1; i++)
+		{
+			if(i < start - 2)
+			{
+		 		starttemp = starttemp->next;
+			}
+			if(endtemp->next != NULL)
+			{
+				endtemp = endtemp->next;
+			}	
+			else
+			{
+				error_handle("Index out of bounds");
+			}	
+		}
+		// for(int i = start; i < end; i++)
+		// {
+		// 	starttemp = starttemp->next;
+		// 	struct Node* tbf = starttemp;
+		// 	starttemp->next = starttemp->next->next; // bug here
+		// 	free(tbf);
+		// }
+		starttemp->next = endtemp;
+	}
+}
+
+struct Node * lpat(struct Node* head, int index)
 {
 	struct Node* temp = head;
+	if(index == 0)
+	{
+		return head;
+	}
 	for(int i = 0; i < index - 1; i++)
 	{
 		if(temp->next != NULL)
@@ -165,7 +220,22 @@ struct Node* lpat(struct Node* head, int index)
 	return temp->next;
 }
 
-int lvat(struct Node* head, int index)
+int lvat(struct Node * head, int index)
 {
 	return lpat(head, index)->value;
+}
+
+void lreverse(struct Node ** head)
+{
+	struct Node *temp, *prev, *current, *next;
+	current = (*head);
+	prev = NULL;
+	while(current != NULL)
+	{
+		next = current->next;
+		current->next = prev;
+		prev = current;
+		current = next;
+	}
+	*head = prev;
 }
