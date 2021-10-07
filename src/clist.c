@@ -11,7 +11,7 @@ void error_handle(char * arr)
 	{
 		printf("%c", *arr);
 		arr++;
-	}	
+	}
 	printf("\n");
 	exit(0);
 }
@@ -29,7 +29,7 @@ void lprint(struct Node * head)
 	{
 		printf("%d ", temp->value);
 		temp=temp->next;
-	}	
+	}
 }
 
 void linsert(struct Node ** head, int x, int n)
@@ -175,31 +175,15 @@ void lrmrng(struct Node ** head, int start, int end)
 	}
 	else
 	{
-		struct Node* endtemp = *head;
-		struct Node* starttemp = *head;
-		for(int i = 0; i <= end - 1; i++)
+		struct Node * aux;
+		for(int i = 0; i < start - 1; i++)
 		{
-			if(i < start - 2)
-			{
-		 		starttemp = starttemp->next;
-			}
-			if(endtemp->next != NULL)
-			{
-				endtemp = endtemp->next;
-			}	
-			else
-			{
-				error_handle("Index out of bounds");
-			}	
+			aux = aux->next;
 		}
-		// for(int i = start; i < end; i++)
-		// {
-		// 	starttemp = starttemp->next;
-		// 	struct Node* tbf = starttemp;
-		// 	starttemp->next = starttemp->next->next; // bug here
-		// 	free(tbf);
-		// }
-		starttemp->next = endtemp;
+		for(int i = 0; i < (end - start) - 1; i++)
+		{
+			lrm(head, start);
+		}
 	}
 }
 
